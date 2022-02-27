@@ -173,7 +173,7 @@ public class Invoice {
 					
 					int third = nthLastIndexOf(2, "\r\n", jsonResponse.getString("journal"));
 					
-/*					for (int i = 0; i < numOfPrintedCopies; i++) {
+					for (int i = 0; i < numOfPrintedCopies; i++) {
 						Printer printer = new Printer(printerName);
 						printer.printBytes(jsonResponse.get("journal").toString().substring(0, third).getBytes("windows-1251"));
 						
@@ -189,7 +189,7 @@ public class Invoice {
 						byte[] cutP = new byte[] { 0x1d, 'V', 1 };
 						printer.printBytes(cutP);
 					}
-*/				}				
+				}				
 	
 				return Response.status(200).entity(jsonResponse.toString()).build();
 							
