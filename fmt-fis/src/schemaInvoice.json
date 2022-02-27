@@ -1,0 +1,116 @@
+    {  
+        "$schema": "https://json-schema.org/draft/2019-09/schema#",  
+        "$id+": "http://my-paintings-api.com/schemas/painting-schema.json",  
+        "type": "object",  
+        "title": "Invoice",  
+        "description": "Invoice information",  
+        "additionalProperties": true,  
+        "required": ["invoiceType", "transactionType", "payment", "items"],  
+        "properties": {
+			"dateAndTimeOfIssue": {
+				"type":"string"			
+			},
+			"cashier": {  
+                "type": ["string", "null"],
+                "maxLength": 50,    
+                "description": "Kasir"  
+            },  
+			"buyerId":{
+				"type": "string",
+				"maxLength": 20
+			},  
+			"buyerCostCenterId":{
+				"type": "string",
+				"maxLength": 50
+			}, 
+			 "invoiceType": {   
+                "type": "number",
+                "description": "Tip racuna"  
+            },  
+            "transactionType": {  
+                "type": "number", 
+                "description": "Tip placanja"  
+            }, 
+            "payment": {  
+                "type": "array",  
+                "items": { "$ref": "#/$defs/pay" },
+				"minItems": 1
+            },
+			"invoiceNumber":{
+				"type": "string",
+				"maxLength":60
+			},
+			"referentDocumentNumber":{
+				"type":"string"
+			},
+			"referentDocumentDT":{
+				"type": "string"
+			},
+			"options":{
+				"type": "object",
+				"required": ["omitQRCodeGen", "omitTextualRepresentation"],
+				"properties": {
+					"omitQRCodeGen": {
+						"type": "string",
+						"enum": ["0","1"]
+					},
+					"omitTextualRepresentation": {
+						"type": "string",
+						"enum": ["0","1"]					
+					}
+				}
+			},
+			"items":{
+				"type": "array",
+				"items": {"$ref":"#/$defs/itm"}
+			}
+			
+        },  
+        "$defs": {  
+            "pay": {
+				"type": "object",
+				"required": ["amount", "paymentType"],
+				"properties": {
+					"amount": {  
+						"type": "number",  
+						"multipleOf": 0.01  
+					},
+					"paymentType":{
+						"type": "number"
+					}
+				}
+            },
+			"itm":{
+				"type": "object",
+				"required": ["name", "quantity", "unitPrice", "totalAmount", "labels"],
+				"properties": {
+					"gtin": {
+						"type": "string",
+						"minLength": 8,
+						"maxLength": 14
+					},
+					"name": {
+						"type": "string",
+						"maxLength": 2048
+					},
+					"quantity":{
+						"type": "number",
+						"multipleOf": 0.001
+					},
+					"unitPrice":{
+						"type": "number",
+						"multipleOf": 0.01
+					},
+					"totalAmount":{
+						"type": "number",
+						"multipleOf": 0.01
+					},
+					"labels": {
+						"type": "array",
+						"items": {"type": "string"},
+						"minItems": 1
+					}
+				}
+			}				
+        }  
+    }  
